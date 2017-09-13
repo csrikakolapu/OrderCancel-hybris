@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+
+				
+				
+				
+				
+	<classpathentry exported="false" kind="src" path="/platform" />
+	<classpathentry exported="true" kind="src" path="/acceleratorcms" />
+	<classpathentry exported="true" kind="src" path="/hmc" />
+	<classpathentry exported="true" kind="src" path="/solrserver" />
+	<classpathentry exported="true" kind="lib" path="resources" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="src" />
+	<classpathentry exported="true" output="eclipsebin/hmc/classes" kind="src" path="hmc/src" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="testsrc" />
+	
+
+<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="gensrc" />
+	
+<classpathentry exported="true" kind="lib" path="lib/spring-ws-core-2.1.4.RELEASE.jar" />		<classpathentry exported="true" kind="lib" path="lib/apache-axiom-api-1.2.7.jar" />
+<classpathentry exported="true" kind="lib" path="lib/axis2-0.95.jar" />
+<classpathentry exported="true" kind="lib" path="lib/axis2-adb-1.5.jar" />
+<classpathentry exported="true" kind="lib" path="lib/httpclient-4.2.3.jar" />	
+<classpathentry exported="true" kind="lib" path="lib/sapwsdl-0.1.0-SNAPSHOT.jar" />	
+<classpathentry exported="true" kind="lib" path="lib/httpcore-4.3.jar" />
+
+
+</classpath>
+				
