@@ -4,6 +4,7 @@
 package com.deloitte.storefront.controllers.pages;
 
 import de.hybris.merchandise.facades.order.data.OrderCancelResultData;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,6 @@ public class OrderCancelController extends AbstractSearchPageController
 	}
 
 	@RequestMapping(value = "/cancelOrder/{orderCode}", method = RequestMethod.GET)
-	@RequireHardLogIn
 	public String orderCancelV2(@PathVariable("orderCode") final String orderCode, final RedirectAttributes redirectAttributes)
 
 	{
