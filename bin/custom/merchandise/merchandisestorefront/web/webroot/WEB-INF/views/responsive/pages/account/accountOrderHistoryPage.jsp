@@ -36,6 +36,7 @@
 						<th><spring:theme code="text.account.orderHistory.orderStatus"/></th>
 						<th><spring:theme code="text.account.orderHistory.datePlaced"/></th>
 						<th><spring:theme code="text.account.orderHistory.total"/></th>
+						<th><spring:theme code="text.account.orderHistory.cancelAction"/></th>
 					</tr>
 					<c:forEach items="${searchPageData.results}" var="order">
 						<tr class="responsive-table-item">
@@ -57,6 +58,11 @@
 								<td class="hidden-sm hidden-md hidden-lg"><spring:theme code="text.account.orderHistory.total"/></td>
 								<td class="responsive-table-cell responsive-table-cell-bold">
 									${order.total.formattedValue}
+								</td>
+								<td class="responsive-table-cell responsive-table-cell-bold">
+									<a href="/merchandisestorefront/custom/cancelOrder/${order.code}" class="responsive-table-link">
+										Cancel Order
+									</a>
 								</td>
 							</ycommerce:testId>
 						</tr>
