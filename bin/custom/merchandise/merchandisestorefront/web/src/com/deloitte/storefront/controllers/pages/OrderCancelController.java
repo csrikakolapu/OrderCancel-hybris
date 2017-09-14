@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.deloitte.controllers.pages;
+package com.deloitte.storefront.controllers.pages;
 
 import de.hybris.merchandise.facades.order.data.OrderCancelResultData;
 
