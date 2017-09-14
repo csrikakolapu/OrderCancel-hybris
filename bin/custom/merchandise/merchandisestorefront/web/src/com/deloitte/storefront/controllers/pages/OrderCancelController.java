@@ -23,7 +23,7 @@ import com.deloitte.facades.order.CustomSAPOrderCancellationFacade;
  */
 @Controller
 @RequestMapping("/custom")
-public class OrderCancelController extends AbstractSearchPageController
+public class OrderCancelController extends AbstractPageController
 {
 
 
