@@ -477,13 +477,13 @@ http://www.springframework.org/schema/oxm
 	</bean>
 	
 	<bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
-		<!-- <constructor-arg>
+		<constructor-arg>
 			<bean class="org.apache.http.impl.conn.PoolingClientConnectionManager">
-				<constructor-arg ref="httpsSchemaRegistry" />
-				<property name="maxTotal" value="${httpconnection.maxTotal:20}" />
-				<property name="defaultMaxPerRoute" value="${httpconnection.defaultMaxPerRoute:2}" />
+				<property name="maxTotal" value="${ace.httpconnection.maxTotal:20}" />
+				<property name="defaultMaxPerRoute" value="${ace.httpconnection.defaultMaxPerRoute:2}" />
 			</bean>
-		</constructor-arg> -->
+		</constructor-arg>
 	</bean>
+	
 	
 </beans>
