@@ -6,8 +6,13 @@ package com.deloitte.core.service.impl;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +102,17 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		}
 
 		orderCancelRequest.getOrderDetail().addAll(orderDetailList);
+
+		try
+		{
+			final String xml = XmlToStringWriter(orderCancelRequest).toString();
+			System.out.println(xml);
+		}
+		catch (final JAXBException e)
+		{
+			e.printStackTrace();
+		}
+
 		final HttpComponentsMessageSender messageSender = (HttpComponentsMessageSender) webServiceTemplateSAP
 				.getMessageSenders()[0];
 		((DefaultHttpClient) messageSender.getHttpClient()).addRequestInterceptor(new RemoveSoapHeadersInterceptor(), 0);
@@ -111,5 +127,16 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		return true;
 
 	}
+
+	private StringWriter XmlToStringWriter(final Object xmlObject) throws JAXBException
+	{
+		final JAXBContext requestContext = JAXBContext.newInstance(xmlObject.getClass());
+		final Marshaller requestMarshaller = requestContext.createMarshaller();
+		requestMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		final StringWriter writer = new StringWriter();
+		requestMarshaller.marshal(xmlObject, writer);
+		return writer;
+	}
+
 
 }
