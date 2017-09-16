@@ -468,12 +468,12 @@ http://www.springframework.org/schema/oxm
 		<constructor-arg ref="httpClient" />
 		<property name="connectionTimeout" value="300000" />
 		<property name="readTimeout" value="300000" />
-		<!-- <property name="credentials">
+		<property name="credentials">
 			<bean class="org.apache.http.auth.UsernamePasswordCredentials">
 				<constructor-arg value="${SAPPOUserid}" />
 				<constructor-arg value="${SAPPOPassword}" />
 			</bean>
-		</property> -->
+		</property>
 	</bean>
 	
 	<bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
