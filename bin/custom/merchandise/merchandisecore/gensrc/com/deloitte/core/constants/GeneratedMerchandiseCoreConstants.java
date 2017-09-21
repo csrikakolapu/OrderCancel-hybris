@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Sep 13, 2017 11:11:08 AM                    ---
+ * --- Generated at Sep 21, 2017 2:05:44 PM                     ---
  * ----------------------------------------------------------------
  */
 package com.deloitte.core.constants;
@@ -20,6 +20,7 @@ public class GeneratedMerchandiseCoreConstants
 		public static final String APPARELSIZEVARIANTPRODUCT = "ApparelSizeVariantProduct".intern();
 		public static final String APPARELSTYLEVARIANTPRODUCT = "ApparelStyleVariantProduct".intern();
 		public static final String ELECTRONICSCOLORVARIANTPRODUCT = "ElectronicsColorVariantProduct".intern();
+		public static final String SAPINBOUND = "SAPInbound".intern();
 		public static final String SWATCHCOLORENUM = "SwatchColorEnum".intern();
 	}
 	public static class Attributes

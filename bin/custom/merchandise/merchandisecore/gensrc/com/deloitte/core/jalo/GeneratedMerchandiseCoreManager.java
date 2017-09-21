@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Sep 13, 2017 11:11:08 AM                    ---
+ * --- Generated at Sep 21, 2017 2:05:44 PM                     ---
  * ----------------------------------------------------------------
  */
 package com.deloitte.core.jalo;
@@ -11,6 +11,7 @@ import com.deloitte.core.jalo.ApparelProduct;
 import com.deloitte.core.jalo.ApparelSizeVariantProduct;
 import com.deloitte.core.jalo.ApparelStyleVariantProduct;
 import com.deloitte.core.jalo.ElectronicsColorVariantProduct;
+import com.deloitte.core.jalo.SAPInbound;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -148,6 +149,32 @@ public abstract class GeneratedMerchandiseCoreManager extends Extension
 	public ElectronicsColorVariantProduct createElectronicsColorVariantProduct(final Map attributeValues)
 	{
 		return createElectronicsColorVariantProduct( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public SAPInbound createSAPInbound(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( MerchandiseCoreConstants.TC.SAPINBOUND );
+			return (SAPInbound)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating SAPInbound : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public SAPInbound createSAPInbound(final Map attributeValues)
+	{
+		return createSAPInbound( getSession().getSessionContext(), attributeValues );
 	}
 	
 	@Override

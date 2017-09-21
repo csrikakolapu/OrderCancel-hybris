@@ -5,6 +5,7 @@ package com.deloitte.core.service.impl;
 
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
+import de.hybris.platform.servicelayer.model.ModelService;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -21,11 +22,12 @@ import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender.RemoveSoapHeadersInterceptor;
 
 import com.deloitte.core.dao.MerchandiseOrderDao;
+import com.deloitte.core.model.SAPInboundModel;
 import com.deloitte.core.service.CustomOrderCancelService;
 
-import hybris.com.sap.ordercancellationpoc.DTOrderCancellationRequest;
-import hybris.com.sap.ordercancellationpoc.DTOrderCancellationRequest.OrderDetail;
-import hybris.com.sap.ordercancellationpoc.DTOrderCancellationResponse;
+import hybris.com.sap.ordercancellationpoc.MTOrderCancellationRequest;
+import hybris.com.sap.ordercancellationpoc.MTOrderCancellationRequest.OrderDetail;
+import hybris.com.sap.ordercancellationpoc.MTOrderCancellationResponse;
 import hybris.com.sap.ordercancellationpoc.ObjectFactory;
 
 
@@ -40,6 +42,9 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 
 
 	private MerchandiseOrderDao orderDao;
+
+	@Autowired
+	private ModelService modelService;
 
 	/*
 	 * (non-Javadoc)
@@ -85,14 +90,14 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 	public boolean cancelOrderInSAP(final OrderModel order)
 	{
 		final ObjectFactory objFactory = new ObjectFactory();
-		final DTOrderCancellationRequest orderCancelRequest = objFactory.createDTOrderCancellationRequest();
+		final MTOrderCancellationRequest orderCancelRequest = objFactory.createMTOrderCancellationRequest();
 		final List<AbstractOrderEntryModel> entries = order.getEntries();
 		final List<OrderDetail> orderDetailList = new ArrayList<>();
 
 
 		for (final AbstractOrderEntryModel entry : entries)
 		{
-			final OrderDetail orderDetail = objFactory.createDTOrderCancellationRequestOrderDetail();
+			final OrderDetail orderDetail = objFactory.createMTOrderCancellationRequestOrderDetail();
 			orderDetailList.add(orderDetail);
 			orderDetail.setOrderNo(order.getCode());
 			orderDetail.setNote("Order cancelled by user.");
@@ -106,7 +111,9 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		try
 		{
 			final String xml = XmlToStringWriter(orderCancelRequest).toString();
-			System.out.println(xml);
+			final SAPInboundModel sapInbound = modelService.create(SAPInboundModel._TYPECODE);
+			sapInbound.setInputContent(xml);
+			modelService.save(sapInbound);
 		}
 		catch (final JAXBException e)
 		{
@@ -117,7 +124,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 				.getMessageSenders()[0];
 		((DefaultHttpClient) messageSender.getHttpClient()).addRequestInterceptor(new RemoveSoapHeadersInterceptor(), 0);
 		webServiceTemplateSAP.setMessageSender(messageSender);
-		final DTOrderCancellationResponse response = (DTOrderCancellationResponse) webServiceTemplateSAP
+		final MTOrderCancellationResponse response = (MTOrderCancellationResponse) webServiceTemplateSAP
 				.marshalSendAndReceive(orderCancelRequest);
 
 		if (response != null)

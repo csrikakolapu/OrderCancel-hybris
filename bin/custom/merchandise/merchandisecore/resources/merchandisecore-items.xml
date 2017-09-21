@@ -112,6 +112,22 @@
 					</attribute>
 				</attributes>
 			</itemtype>
+			
+			<itemtype code="SAPInbound"  autocreate="true" generate="true"
+          jaloclass="com.deloitte.core.jalo.SAPInbound">
+          	<deployment table="SapInbound" typecode="21000"/>
+          		<attributes>
+          			<attribute qualifier="orderNumber" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="true"/>
+					</attribute>
+					<attribute qualifier="inputContent" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="true"/>
+					</attribute>
+          		</attributes>
+          	
+          </itemtype>
 		</typegroup>
 
 	</itemtypes>
