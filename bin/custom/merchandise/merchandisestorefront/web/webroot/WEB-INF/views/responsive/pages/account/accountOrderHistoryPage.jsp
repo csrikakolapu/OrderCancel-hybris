@@ -60,10 +60,13 @@
 									${order.total.formattedValue}
 								</td>
 								<td class="responsive-table-cell responsive-table-cell-bold">
-								<c:if test="${order.statusDisplay != 'Completed'}"></c:if>
+								<c:if test="${order.statusDisplay != 'Completed'}">
 									<a href="/merchandisestorefront/custom/cancelOrder/${order.code}" class="responsive-table-link">
 										Cancel Order
 									</a>
+								
+								</c:if>
+									
 								</td>
 							</ycommerce:testId>
 						</tr>
