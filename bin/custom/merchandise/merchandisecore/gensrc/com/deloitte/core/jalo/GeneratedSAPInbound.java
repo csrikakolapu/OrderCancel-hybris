@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Sep 21, 2017 2:05:44 PM                     ---
+ * --- Generated at Sep 22, 2017 5:12:28 PM                     ---
  * ----------------------------------------------------------------
  */
 package com.deloitte.core.jalo;
@@ -22,14 +22,14 @@ public abstract class GeneratedSAPInbound extends GenericItem
 {
 	/** Qualifier of the <code>SAPInbound.orderNumber</code> attribute **/
 	public static final String ORDERNUMBER = "orderNumber";
-	/** Qualifier of the <code>SAPInbound.inputContent</code> attribute **/
-	public static final String INPUTCONTENT = "inputContent";
+	/** Qualifier of the <code>SAPInbound.inputContentXML</code> attribute **/
+	public static final String INPUTCONTENTXML = "inputContentXML";
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>();
 		tmp.put(ORDERNUMBER, AttributeMode.INITIAL);
-		tmp.put(INPUTCONTENT, AttributeMode.INITIAL);
+		tmp.put(INPUTCONTENTXML, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -39,39 +39,39 @@ public abstract class GeneratedSAPInbound extends GenericItem
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>SAPInbound.inputContent</code> attribute.
-	 * @return the inputContent
+	 * <i>Generated method</i> - Getter of the <code>SAPInbound.inputContentXML</code> attribute.
+	 * @return the inputContentXML
 	 */
-	public String getInputContent(final SessionContext ctx)
+	public String getInputContentXML(final SessionContext ctx)
 	{
-		return (String)getProperty( ctx, INPUTCONTENT);
+		return (String)getProperty( ctx, INPUTCONTENTXML);
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>SAPInbound.inputContent</code> attribute.
-	 * @return the inputContent
+	 * <i>Generated method</i> - Getter of the <code>SAPInbound.inputContentXML</code> attribute.
+	 * @return the inputContentXML
 	 */
-	public String getInputContent()
+	public String getInputContentXML()
 	{
-		return getInputContent( getSession().getSessionContext() );
+		return getInputContentXML( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>SAPInbound.inputContent</code> attribute. 
-	 * @param value the inputContent
+	 * <i>Generated method</i> - Setter of the <code>SAPInbound.inputContentXML</code> attribute. 
+	 * @param value the inputContentXML
 	 */
-	public void setInputContent(final SessionContext ctx, final String value)
+	public void setInputContentXML(final SessionContext ctx, final String value)
 	{
-		setProperty(ctx, INPUTCONTENT,value);
+		setProperty(ctx, INPUTCONTENTXML,value);
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>SAPInbound.inputContent</code> attribute. 
-	 * @param value the inputContent
+	 * <i>Generated method</i> - Setter of the <code>SAPInbound.inputContentXML</code> attribute. 
+	 * @param value the inputContentXML
 	 */
-	public void setInputContent(final String value)
+	public void setInputContentXML(final String value)
 	{
-		setInputContent( getSession().getSessionContext(), value );
+		setInputContentXML( getSession().getSessionContext(), value );
 	}
 	
 	/**

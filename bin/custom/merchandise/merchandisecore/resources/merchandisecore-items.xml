@@ -121,8 +121,15 @@
 						<persistence type="property"/>
 						<modifiers optional="true"/>
 					</attribute>
-					<attribute qualifier="inputContent" type="java.lang.String">
-						<persistence type="property"/>
+					<attribute qualifier="inputContentXML" type="java.lang.String">
+						<persistence type="property">
+            				<columntype database="sqlserver">
+								<value>nvarchar(max)</value>
+							</columntype>
+							<columntype>
+								<value>varchar(35000)</value>
+							</columntype>
+            			</persistence>
 						<modifiers optional="true"/>
 					</attribute>
           		</attributes>
