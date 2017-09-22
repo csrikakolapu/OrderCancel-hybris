@@ -4,6 +4,7 @@
 package com.deloitte.facades.order.impl;
 
 import de.hybris.merchandise.facades.order.data.OrderCancelResultData;
+import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.util.Config;
@@ -40,7 +41,16 @@ public class DefaultCustomSAPOrderCancellationFacade implements CustomSAPOrderCa
 		if (Config.getBoolean("sap.order.cancel", false))
 		{
 			final OrderModel orderModel = orderCancelService.getOrderByCode(orderCode);
-			orderCancelService.cancelOrderInSAP(orderModel);
+			try
+			{
+				orderCancelService.cancelOrderInSAP(orderModel);
+				orderModel.setStatus(OrderStatus.CANCELLED);
+				modelService.save(orderModel);
+			}
+			catch (final Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		result.setOrderId(orderCode);
