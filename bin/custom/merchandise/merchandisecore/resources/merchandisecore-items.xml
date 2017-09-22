@@ -123,12 +123,9 @@
 					</attribute>
 					<attribute qualifier="inputContentXML" type="java.lang.String">
 						<persistence type="property">
-            				<columntype database="sqlserver">
-								<value>nvarchar(max)</value>
-							</columntype>
-							<columntype>
-								<value>varchar(35000)</value>
-							</columntype>
+            				 <columntype database="mysql">
+                                <value>text</value>
+                            </columntype>
             			</persistence>
 						<modifiers optional="true"/>
 					</attribute>
