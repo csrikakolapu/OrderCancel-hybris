@@ -107,18 +107,20 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		}
 
 		orderCancelRequest.getOrderDetail().addAll(orderDetailList);
+		String xml = "";
 
 		try
 		{
-			final String xml = XmlToStringWriter(orderCancelRequest).toString();
+			xml = XmlToStringWriter(orderCancelRequest).toString();
 			final SAPInboundModel sapInbound = modelService.create(SAPInboundModel._TYPECODE);
 			sapInbound.setInputContentXML(xml);
 			sapInbound.setOrderNumber(order.getCode());
 			modelService.save(sapInbound);
 		}
-		catch (final JAXBException e)
+		catch (final Exception e)
 		{
 			e.printStackTrace();
+			System.out.println(xml);
 		}
 
 		final HttpComponentsMessageSender messageSender = (HttpComponentsMessageSender) webServiceTemplateSAP
