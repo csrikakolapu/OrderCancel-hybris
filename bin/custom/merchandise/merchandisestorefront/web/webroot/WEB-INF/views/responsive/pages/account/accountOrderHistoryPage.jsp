@@ -60,8 +60,8 @@
 									${order.total.formattedValue}
 								</td>
 								<td class="responsive-table-cell responsive-table-cell-bold">
-									${order.statusDisplay}
-								<c:if test="${order.statusDisplay != 'Completed' || order.statusDisplay != 'Cancelled'}">
+									
+								<c:if test="${order.statusDisplay != 'completed' || order.statusDisplay != 'cancelled'}">
 									<a href="/merchandisestorefront/custom/cancelOrder/${order.code}" class="responsive-table-link">
 										Cancel Order
 									</a>
