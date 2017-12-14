@@ -24,11 +24,11 @@ import org.springframework.ws.transport.http.HttpComponentsMessageSender.RemoveS
 import com.deloitte.core.dao.MerchandiseOrderDao;
 import com.deloitte.core.model.SAPInboundModel;
 import com.deloitte.core.service.CustomOrderCancelService;
+import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellation;
+import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellation.OrderDetails;
+import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellationResponse;
+import com.deloitte.dhub.sales.salesordercancellation.ObjectFactory;
 
-import hybris.com.sap.ordercancellationpoc.MTOrderCancellationRequest;
-import hybris.com.sap.ordercancellationpoc.MTOrderCancellationRequest.OrderDetail;
-import hybris.com.sap.ordercancellationpoc.MTOrderCancellationResponse;
-import hybris.com.sap.ordercancellationpoc.ObjectFactory;
 
 
 /**
@@ -90,14 +90,14 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 	public boolean cancelOrderInSAP(final OrderModel order)
 	{
 		final ObjectFactory objFactory = new ObjectFactory();
-		final MTOrderCancellationRequest orderCancelRequest = objFactory.createMTOrderCancellationRequest();
+		final MTDHUBOrderCancellation orderCancelRequest = objFactory.createMTDHUBOrderCancellation();
 		final List<AbstractOrderEntryModel> entries = order.getEntries();
-		final List<OrderDetail> orderDetailList = new ArrayList<>();
+		final List<OrderDetails> orderDetailList = new ArrayList<>();
 
 
 		for (final AbstractOrderEntryModel entry : entries)
 		{
-			final OrderDetail orderDetail = objFactory.createMTOrderCancellationRequestOrderDetail();
+			final OrderDetails orderDetail = objFactory.createMTDHUBOrderCancellationOrderDetails();
 			orderDetailList.add(orderDetail);
 			orderDetail.setOrderNo(order.getCode());
 			orderDetail.setNote("Order cancelled by user.");
@@ -106,7 +106,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 			orderDetail.setRejectionCode("R");
 		}
 
-		orderCancelRequest.getOrderDetail().addAll(orderDetailList);
+		orderCancelRequest.getOrderDetails().addAll(orderDetailList);
 		String xml = "";
 
 		try
@@ -127,7 +127,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 				.getMessageSenders()[0];
 		((DefaultHttpClient) messageSender.getHttpClient()).addRequestInterceptor(new RemoveSoapHeadersInterceptor(), 0);
 		webServiceTemplateSAP.setMessageSender(messageSender);
-		final MTOrderCancellationResponse response = (MTOrderCancellationResponse) webServiceTemplateSAP
+		final MTDHUBOrderCancellationResponse response = (MTDHUBOrderCancellationResponse) webServiceTemplateSAP
 				.marshalSendAndReceive(orderCancelRequest);
 
 		if (response != null)
