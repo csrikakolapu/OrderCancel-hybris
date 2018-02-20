@@ -4,7 +4,7 @@
 package com.deloitte.facades.order.impl;
 
 import de.hybris.merchandise.facades.order.data.OrderCancelResultData;
-import de.hybris.platform.constants.GeneratedCoreConstants.Enumerations.OrderStatus;
+import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.util.Config;
