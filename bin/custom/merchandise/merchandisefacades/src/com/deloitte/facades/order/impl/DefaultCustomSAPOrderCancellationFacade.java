@@ -4,11 +4,15 @@
 package com.deloitte.facades.order.impl;
 
 import de.hybris.merchandise.facades.order.data.OrderCancelResultData;
-import de.hybris.platform.core.enums.OrderStatus;
+import de.hybris.platform.constants.GeneratedCoreConstants.Enumerations.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.util.Config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.deloitte.core.service.CustomOrderCancelService;
@@ -21,6 +25,8 @@ import com.deloitte.facades.order.CustomSAPOrderCancellationFacade;
  */
 public class DefaultCustomSAPOrderCancellationFacade implements CustomSAPOrderCancellationFacade
 {
+	private static final Logger LOG = Logger.getLogger(DefaultCustomSAPOrderCancellationFacade.class);
+
 	@Autowired
 	private ModelService modelService;
 
@@ -43,9 +49,18 @@ public class DefaultCustomSAPOrderCancellationFacade implements CustomSAPOrderCa
 			final OrderModel orderModel = orderCancelService.getOrderByCode(orderCode);
 			try
 			{
-				orderCancelService.cancelOrderInSAP(orderModel);
-				orderModel.setStatus(OrderStatus.CANCELLED);
-				modelService.save(orderModel);
+				final List<String> errorMessages = new ArrayList<String>();
+				final boolean status = orderCancelService.cancelOrderInSAP(orderModel, errorMessages);
+				if (status)
+				{
+					orderModel.setStatus(OrderStatus.CANCELLED);
+					modelService.save(orderModel);
+				}
+				else
+				{
+					LOG.error(errorMessages);
+				}
+
 			}
 			catch (final Exception e)
 			{

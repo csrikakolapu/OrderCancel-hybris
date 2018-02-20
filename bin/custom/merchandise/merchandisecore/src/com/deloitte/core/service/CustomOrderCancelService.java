@@ -5,6 +5,8 @@ package com.deloitte.core.service;
 
 import de.hybris.platform.core.model.order.OrderModel;
 
+import java.util.List;
+
 
 /**
  * @author csrikakolapu
@@ -20,7 +22,7 @@ public interface CustomOrderCancelService
 	 * @param order
 	 * @return
 	 */
-	boolean cancelOrderInSAP(OrderModel order);
+	boolean cancelOrderInSAP(OrderModel order, List<String> errorMessages);
 
 
 }

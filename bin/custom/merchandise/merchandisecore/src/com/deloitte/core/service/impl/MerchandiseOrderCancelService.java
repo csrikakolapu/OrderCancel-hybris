@@ -10,6 +10,7 @@ import de.hybris.platform.servicelayer.model.ModelService;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -27,6 +28,7 @@ import com.deloitte.core.service.CustomOrderCancelService;
 import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellation;
 import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellation.OrderDetails;
 import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellationResponse;
+import com.deloitte.dhub.sales.salesordercancellation.MTDHUBOrderCancellationResponse.CancelStatus;
 import com.deloitte.dhub.sales.salesordercancellation.ObjectFactory;
 
 
@@ -87,7 +89,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 	}
 
 	@Override
-	public boolean cancelOrderInSAP(final OrderModel order)
+	public boolean cancelOrderInSAP(final OrderModel order, final List<String> errorMessages)
 	{
 		final ObjectFactory objFactory = new ObjectFactory();
 		final MTDHUBOrderCancellation orderCancelRequest = objFactory.createMTDHUBOrderCancellation();
@@ -101,9 +103,10 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 			orderDetailList.add(orderDetail);
 			orderDetail.setOrderNo(order.getCode());
 			orderDetail.setNote("Order cancelled by user.");
-
-			orderDetail.setItemNo(entry.getEntryNumber().toString());
-			orderDetail.setRejectionCode("R");
+			Integer orderEntryNumber = entry.getEntryNumber();
+			orderEntryNumber = orderEntryNumber + 1;
+			orderDetail.setItemNo(orderEntryNumber.toString());
+			orderDetail.setRejectionCode("ZH");
 		}
 
 		orderCancelRequest.getOrderDetails().addAll(orderDetailList);
@@ -129,12 +132,22 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		webServiceTemplateSAP.setMessageSender(messageSender);
 		final MTDHUBOrderCancellationResponse response = (MTDHUBOrderCancellationResponse) webServiceTemplateSAP
 				.marshalSendAndReceive(orderCancelRequest);
-
 		if (response != null)
 		{
-			response.getCancelStatus();
+			final List<CancelStatus> statusList = response.getCancelStatus();
+			final List<CancelStatus> errorStatus = statusList.stream().filter(status -> status.equals("E"))
+					.collect(Collectors.toList());
+			errorMessages.addAll(errorStatus.stream().map(CancelStatus::getStatusMsg).collect(Collectors.toList()));
 		}
-		return true;
+
+		if (errorMessages.isEmpty())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 
 	}
 
