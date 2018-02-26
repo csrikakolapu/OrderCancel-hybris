@@ -110,21 +110,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		}
 
 		orderCancelRequest.getOrderDetails().addAll(orderDetailList);
-		String xml = "";
 
-		try
-		{
-			xml = XmlToStringWriter(orderCancelRequest).toString();
-			final SAPInboundModel sapInbound = modelService.create(SAPInboundModel._TYPECODE);
-			sapInbound.setInputContentXML(xml);
-			sapInbound.setOrderNumber(order.getCode());
-			modelService.save(sapInbound);
-		}
-		catch (final Exception e)
-		{
-			e.printStackTrace();
-			System.out.println(xml);
-		}
 
 		final HttpComponentsMessageSender messageSender = (HttpComponentsMessageSender) webServiceTemplateSAP
 				.getMessageSenders()[0];
@@ -134,6 +120,24 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 				.marshalSendAndReceive(orderCancelRequest);
 		if (response != null)
 		{
+			String xml = "";
+
+			try
+			{
+				xml = XmlToStringWriter(orderCancelRequest).toString();
+				final SAPInboundModel sapInbound = modelService.create(SAPInboundModel._TYPECODE);
+				sapInbound.setInputContentXML(xml);
+				sapInbound.setOrderNumber(order.getCode());
+				xml = XmlToStringWriter(response).toString();
+				sapInbound.setOutputContentXML(xml);
+				modelService.save(sapInbound);
+			}
+			catch (final Exception e)
+			{
+				e.printStackTrace();
+			}
+
+
 			final List<CancelStatus> statusList = response.getCancelStatus();
 			final List<CancelStatus> errorStatus = statusList.stream().filter(status -> status.equals("E"))
 					.collect(Collectors.toList());

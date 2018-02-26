@@ -129,6 +129,14 @@
             			</persistence>
 						<modifiers optional="true"/>
 					</attribute>
+						<attribute qualifier="outputContentXML" type="java.lang.String">
+						<persistence type="property">
+            				 <columntype database="mysql">
+                                <value>text</value>
+                            </columntype>
+            			</persistence>
+						<modifiers optional="true"/>
+					</attribute>
           		</attributes>
           	
           </itemtype>
