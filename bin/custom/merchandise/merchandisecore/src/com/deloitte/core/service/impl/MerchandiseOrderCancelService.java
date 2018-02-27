@@ -139,7 +139,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 
 
 			final List<CancelStatus> statusList = response.getCancelStatus();
-			final List<CancelStatus> errorStatus = statusList.stream().filter(status -> status.equals("E"))
+			final List<CancelStatus> errorStatus = statusList.stream().filter(statusObj -> "E".equals(statusObj.getStatus()))
 					.collect(Collectors.toList());
 			errorMessages.addAll(errorStatus.stream().map(CancelStatus::getStatusMsg).collect(Collectors.toList()));
 		}
