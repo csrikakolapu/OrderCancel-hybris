@@ -22,7 +22,7 @@
 		</ycommerce:testId>
 	</div>
 </c:if>
-<c:if test="${not empty ocerrors)}">
+<c:if test="${not empty ocerrors}">
 	<c:forEach items="${ocerrors}" var="errorMesg">
 		<span>${errorMesg}</span>
 	</c:forEach>
