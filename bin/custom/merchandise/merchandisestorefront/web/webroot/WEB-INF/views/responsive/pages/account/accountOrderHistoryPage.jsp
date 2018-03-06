@@ -1,5 +1,3 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/responsive/template"%>
@@ -9,13 +7,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ycommerce" uri="http://hybris.com/tld/ycommercetags" %>
 <%@ taglib prefix="pagination" tagdir="/WEB-INF/tags/responsive/nav/pagination" %>
-
-<% 
-List<String> arr = new ArrayList<>();
-arr.add("hello test mesg...");
-session.setAttribute("oc-errors",arr); %>
-
-
 
 <spring:url value="/my-account/order/" var="orderDetailsUrl"/>
 <c:set var="searchUrl" value="/my-account/orders?sort=${searchPageData.pagination.sort}"/>

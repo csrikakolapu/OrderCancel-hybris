@@ -150,6 +150,8 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 
 		if (errorMessages.isEmpty())
 		{
+			errorMessages.add("hello test string");
+			session.setAttribute("oc-errors", errorMessages);
 			return true;
 		}
 		else
@@ -157,6 +159,8 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 			session.setAttribute("oc-errors", errorMessages);
 			return false;
 		}
+
+
 
 	}
 
