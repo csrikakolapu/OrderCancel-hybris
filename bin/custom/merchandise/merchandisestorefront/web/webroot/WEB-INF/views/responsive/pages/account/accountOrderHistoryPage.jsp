@@ -23,9 +23,11 @@
 		</ycommerce:testId>
 	</div>
 </c:if>
-<c:forEach items="${session.getAttribute("oc-errors")}" var="errorMesg">
-	<span>${errorMesg}</span>
-</c:forEach>
+<c:if test="${not empty session.getAttribute("oc-errors")}">
+	<c:forEach items="${session.getAttribute("oc-errors")}" var="errorMesg">
+		<span>${errorMesg}</span>
+	</c:forEach>
+</c:if>
 <c:if test="${not empty searchPageData.results}">
 	<div class="account-section-content	">
 		<div class="account-orderhistory">
