@@ -150,7 +150,6 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 
 		if (errorMessages.isEmpty())
 		{
-			errorMessages.add("hello test string");
 			session.setAttribute("oc-errors", errorMessages);
 			return true;
 		}

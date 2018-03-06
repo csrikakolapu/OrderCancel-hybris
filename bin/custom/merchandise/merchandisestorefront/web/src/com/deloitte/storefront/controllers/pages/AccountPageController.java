@@ -9,7 +9,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with hybris.
  *
- *
+ *  
  */
 package com.deloitte.storefront.controllers.pages;
 
@@ -25,6 +25,8 @@ import de.hybris.platform.acceleratorstorefrontcommons.forms.AddressForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateEmailForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdatePasswordForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.UpdateProfileForm;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.AddressValidator;
+import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.EmailValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.PasswordValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.ProfileValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.verification.AddressVerificationResultHandler;
@@ -55,9 +57,8 @@ import de.hybris.platform.commerceservices.search.pagedata.PageableData;
 import de.hybris.platform.commerceservices.search.pagedata.SearchPageData;
 import de.hybris.platform.commerceservices.util.ResponsiveUtils;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
-import de.hybris.platform.servicelayer.interceptor.impl.AddressValidator;
-import de.hybris.platform.servicelayer.session.SessionService;
 import de.hybris.platform.util.Config;
+import com.deloitte.storefront.controllers.ControllerConstants;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -72,7 +73,6 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -86,8 +86,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.deloitte.storefront.controllers.ControllerConstants;
 
 
 /**
@@ -184,7 +182,7 @@ public class AccountPageController extends AbstractSearchPageController
 
 	@Resource(name = "orderGridFormFacade")
 	private OrderGridFormFacade orderGridFormFacade;
-
+	
 	@Autowired
 	private SessionService sessionService;
 
@@ -306,7 +304,8 @@ public class AccountPageController extends AbstractSearchPageController
 	@RequireHardLogIn
 	public String orders(@RequestParam(value = "page", defaultValue = "0") final int page,
 			@RequestParam(value = "show", defaultValue = "Page") final ShowMode showMode,
-			@RequestParam(value = "sort", required = false) final String sortCode, final Model model) throws CMSItemNotFoundException
+			@RequestParam(value = "sort", required = false) final String sortCode, final Model model)
+			throws CMSItemNotFoundException
 	{
 		// Handle paged search results
 		final PageableData pageableData = createPageableData(page, 5, sortCode, showMode);
@@ -332,8 +331,8 @@ public class AccountPageController extends AbstractSearchPageController
 			model.addAttribute("orderData", orderDetails);
 
 			final List<Breadcrumb> breadcrumbs = accountBreadcrumbBuilder.getBreadcrumbs(null);
-			breadcrumbs.add(new Breadcrumb("/my-account/orders",
-					getMessageSource().getMessage("text.account.orderHistory", null, getI18nService().getCurrentLocale()), null));
+			breadcrumbs.add(new Breadcrumb("/my-account/orders", getMessageSource().getMessage("text.account.orderHistory", null,
+					getI18nService().getCurrentLocale()), null));
 			breadcrumbs.add(new Breadcrumb("#", getMessageSource().getMessage("text.account.order.orderBreadcrumb", new Object[]
 			{ orderDetails.getCode() }, "Order {0}", getI18nService().getCurrentLocale()), null));
 			model.addAttribute(BREADCRUMBS_ATTR, breadcrumbs);
@@ -351,8 +350,7 @@ public class AccountPageController extends AbstractSearchPageController
 		return getViewForPage(model);
 	}
 
-	@RequestMapping(value = "/order/" + ORDER_CODE_PATH_VARIABLE_PATTERN
-			+ "/getReadOnlyProductVariantMatrix", method = RequestMethod.GET)
+	@RequestMapping(value = "/order/" + ORDER_CODE_PATH_VARIABLE_PATTERN + "/getReadOnlyProductVariantMatrix", method = RequestMethod.GET)
 	@RequireHardLogIn
 	public String getProductVariantMatrixForResponsive(@PathVariable("orderCode") final String orderCode,
 			@RequestParam("productCode") final String productCode, final Model model)
@@ -573,8 +571,8 @@ public class AccountPageController extends AbstractSearchPageController
 
 	@RequestMapping(value = "/update-password", method = RequestMethod.POST)
 	@RequireHardLogIn
-	public String updatePassword(final UpdatePasswordForm updatePasswordForm, final BindingResult bindingResult, final Model model,
-			final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException
+	public String updatePassword(final UpdatePasswordForm updatePasswordForm, final BindingResult bindingResult,
+			final Model model, final RedirectAttributes redirectAttributes) throws CMSItemNotFoundException
 	{
 		getPasswordValidator().validate(updatePasswordForm, bindingResult);
 		if (!bindingResult.hasErrors())
@@ -642,11 +640,10 @@ public class AccountPageController extends AbstractSearchPageController
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
 
 		final List<Breadcrumb> breadcrumbs = accountBreadcrumbBuilder.getBreadcrumbs(null);
-		breadcrumbs.add(new Breadcrumb(MY_ACCOUNT_ADDRESS_BOOK_URL,
-				getMessageSource().getMessage(TEXT_ACCOUNT_ADDRESS_BOOK, null, getI18nService().getCurrentLocale()), null));
-		breadcrumbs.add(new Breadcrumb("#",
-				getMessageSource().getMessage("text.account.addressBook.addEditAddress", null, getI18nService().getCurrentLocale()),
-				null));
+		breadcrumbs.add(new Breadcrumb(MY_ACCOUNT_ADDRESS_BOOK_URL, getMessageSource().getMessage(TEXT_ACCOUNT_ADDRESS_BOOK, null,
+				getI18nService().getCurrentLocale()), null));
+		breadcrumbs.add(new Breadcrumb("#", getMessageSource().getMessage("text.account.addressBook.addEditAddress", null,
+				getI18nService().getCurrentLocale()), null));
 		model.addAttribute(BREADCRUMBS_ATTR, breadcrumbs);
 		model.addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
 		return getViewForPage(model);
@@ -800,11 +797,10 @@ public class AccountPageController extends AbstractSearchPageController
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ADD_EDIT_ADDRESS_CMS_PAGE));
 
 		final List<Breadcrumb> breadcrumbs = accountBreadcrumbBuilder.getBreadcrumbs(null);
-		breadcrumbs.add(new Breadcrumb(MY_ACCOUNT_ADDRESS_BOOK_URL,
-				getMessageSource().getMessage(TEXT_ACCOUNT_ADDRESS_BOOK, null, getI18nService().getCurrentLocale()), null));
-		breadcrumbs.add(new Breadcrumb("#",
-				getMessageSource().getMessage("text.account.addressBook.addEditAddress", null, getI18nService().getCurrentLocale()),
-				null));
+		breadcrumbs.add(new Breadcrumb(MY_ACCOUNT_ADDRESS_BOOK_URL, getMessageSource().getMessage(TEXT_ACCOUNT_ADDRESS_BOOK, null,
+				getI18nService().getCurrentLocale()), null));
+		breadcrumbs.add(new Breadcrumb("#", getMessageSource().getMessage("text.account.addressBook.addEditAddress", null,
+				getI18nService().getCurrentLocale()), null));
 		model.addAttribute(BREADCRUMBS_ATTR, breadcrumbs);
 		model.addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
 		model.addAttribute("edit", Boolean.TRUE);
@@ -895,8 +891,8 @@ public class AccountPageController extends AbstractSearchPageController
 	@RequestMapping(value = "/select-suggested-address", method = RequestMethod.POST)
 	public String doSelectSuggestedAddress(final AddressForm addressForm, final RedirectAttributes redirectModel)
 	{
-		final Set<String> resolveCountryRegions = org.springframework.util.StringUtils
-				.commaDelimitedListToSet(Config.getParameter("resolve.country.regions"));
+		final Set<String> resolveCountryRegions = org.springframework.util.StringUtils.commaDelimitedListToSet(Config
+				.getParameter("resolve.country.regions"));
 
 		final AddressData selectedAddress = new AddressData();
 		selectedAddress.setId(addressForm.getAddressId());
@@ -931,14 +927,14 @@ public class AccountPageController extends AbstractSearchPageController
 
 		if (Boolean.TRUE.equals(addressForm.getEditAddress()))
 		{
-			selectedAddress.setDefaultAddress(
-					Boolean.TRUE.equals(addressForm.getDefaultAddress()) || userFacade.getAddressBook().size() <= 1);
+			selectedAddress.setDefaultAddress(Boolean.TRUE.equals(addressForm.getDefaultAddress())
+					|| userFacade.getAddressBook().size() <= 1);
 			userFacade.editAddress(selectedAddress);
 		}
 		else
 		{
-			selectedAddress
-					.setDefaultAddress(Boolean.TRUE.equals(addressForm.getDefaultAddress()) || userFacade.isAddressBookEmpty());
+			selectedAddress.setDefaultAddress(Boolean.TRUE.equals(addressForm.getDefaultAddress())
+					|| userFacade.isAddressBookEmpty());
 			userFacade.addAddress(selectedAddress);
 		}
 
