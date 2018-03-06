@@ -6,6 +6,7 @@ package com.deloitte.core.service.impl;
 import de.hybris.platform.core.model.order.AbstractOrderEntryModel;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.servicelayer.model.ModelService;
+import de.hybris.platform.servicelayer.session.SessionService;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -47,6 +48,9 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 
 	@Autowired
 	private ModelService modelService;
+
+	@Autowired
+	private SessionService session;
 
 	/*
 	 * (non-Javadoc)
@@ -150,6 +154,7 @@ public class MerchandiseOrderCancelService implements CustomOrderCancelService
 		}
 		else
 		{
+			session.setAttribute("oc-errors", errorMessages);
 			return false;
 		}
 
