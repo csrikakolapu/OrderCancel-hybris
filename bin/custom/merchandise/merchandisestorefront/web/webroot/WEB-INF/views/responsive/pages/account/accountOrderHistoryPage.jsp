@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/responsive/template"%>
@@ -23,6 +25,10 @@
 		</ycommerce:testId>
 	</div>
 </c:if>
+<% 
+List<String> arr = new ArrayList<>();
+arr.add("hello test mesg...");
+session.setAttribute("oc-errors",arr); %>
 <c:if test="${not empty session.getAttribute('oc-errors')}">
 	<c:forEach items="${session.getAttribute('oc-errors')}" var="errorMesg">
 		<span>${errorMesg}</span>
