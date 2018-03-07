@@ -314,6 +314,7 @@ public class AccountPageController extends AbstractSearchPageController
 		final SearchPageData<OrderHistoryData> searchPageData = orderFacade.getPagedOrderHistoryForStatuses(pageableData);
 		populateModel(model, searchPageData, showMode);
 		model.addAttribute("ocerrors", sessionService.getAttribute("oc-errors"));
+		sessionService.removeAttribute("oc-errors");
 
 		storeCmsPageInModel(model, getContentPageForLabelOrId(ORDER_HISTORY_CMS_PAGE));
 		setUpMetaDataForContentPage(model, getContentPageForLabelOrId(ORDER_HISTORY_CMS_PAGE));
